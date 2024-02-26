@@ -10,5 +10,3 @@ Two custom C++ types, `MyObject` and `DataModel`, are registered with the QML ty
 
 In `Main.qml`, a `Window` is created with a `DataModel` object and a `TextArea`. The `DataModel` object's `data` property is logged, updated, and logged again. The `TextArea` displays the initial and updated values of `data`.
 
-The application is built and run in Qt Creator using the appropriate kit.
-
