@@ -12,6 +12,3 @@ In `Main.qml`, a `Window` is created with a `DataModel` object and a `TextArea`.
 
 The application is built and run in Qt Creator using the appropriate kit.
 
-## License
-
-This project is licensed under the MIT License 
