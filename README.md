@@ -14,4 +14,4 @@ The application is built and run in Qt Creator using the appropriate kit.
 
 ## License
 
-This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) for details.
+This project is licensed under the MIT License 
