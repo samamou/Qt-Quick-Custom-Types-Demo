@@ -18,8 +18,10 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    qmlRegisterType<Mmpose_params>("com.myobject", 1, 1, "mmpose_params"); // registers a custom class / type for QML 
+    // qmlRegisterType<Mmpose_params>("com.myobject", 1, 1, "mmpose_params"); // registers a custom class / type for QML 
     qmlRegisterType<DataModel>("com.myobject", 1, 1, "DataModel"); // registers a custom class / type for QML
+
+    
     const QUrl url(u"qrc:/test/Main.qml"_qs);
 
     QObject::connect(

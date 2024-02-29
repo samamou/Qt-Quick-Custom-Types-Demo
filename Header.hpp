@@ -39,7 +39,7 @@ struct Mmpose_params{
     Q_PROPERTY(bool synchronous_mode MEMBER synchronous_mode)
 
 public:
-    QString name = "Hello"; // Default value for the "foo" property
+    QString name = "Hell8o"; // Default value for the "foo" property
     int params = 123; // Default value for the "bar" property
 
     QString cam_id;
@@ -288,30 +288,27 @@ public:
 struct DataModel : public QObject
 {
     Q_OBJECT // Macro to enable Qt's meta-object system for this class
-    Q_PROPERTY(Mmpose_params data MEMBER data) // Declares a property named "data" with a member variable "data" of type MyObject
+    Q_PROPERTY(Mmpose_params mmpose_params MEMBER mmpose_params) // Declares a property named "mmpose_params" with a member variable "data"
+    Q_PROPERTY(Posenet_params posenet_params MEMBER posenet_params)
+    Q_PROPERTY(Trt_params trt_params MEMBER trt_params)
+    Q_PROPERTY(Pose_backend pose_backend MEMBER pose_backend)
+    Q_PROPERTY(Camera_params camera_params MEMBER camera_params)
+    Q_PROPERTY(Cameras cameras MEMBER cameras)
+    Q_PROPERTY(Dimmaps dimmaps MEMBER dimmaps)
+    Q_PROPERTY(Filters filters MEMBER filters)
+    Q_PROPERTY(OscOutput osc_output MEMBER osc_output)
+    Q_PROPERTY(Config config MEMBER config)
+
 
 public:
-    Mmpose_params data; // Instance of Mmpose_params
-
-    Q_INVOKABLE QString toJson() // Declares a invokable method named "toJson" that returns a QString
-    {
-        /// magic
-        QJsonObject json;
-        json["name"] = data.name;
-        json["params"] = data.params;
-        // Add the rest of the properties...
-
-        QJsonDocument doc(json);
-        return QString(doc.toJson(QJsonDocument::Compact));
-    }
-
-    Q_INVOKABLE void fromJson(const QString& jsonString)
-    {
-        QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8());
-        QJsonObject json = doc.object();
-
-        data.name = json["name"].toString();
-        data.params = json["params"].toInt();
-        // Parse the rest of the properties...
-    }
+    Mmpose_params mmpose_params; // Instance of Mmpose_params
+    Posenet_params posenet_params;
+    Trt_params trt_params;
+    Pose_backend pose_backend;
+    Camera_params camera_params;
+    Cameras cameras;
+    Dimmaps dimmaps;
+    Filters filters;
+    OscOutput osc_output;
+    Config config;
 };
