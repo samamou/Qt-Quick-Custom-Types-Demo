@@ -71,15 +71,10 @@ public:
     int display_delay = 0;
     bool synchronous_mode = false;
 
-    bool operator==(const Mmpose_params& other) const
-    {
-        // Implement equality comparison
-        // For example, compare just the 'name' and 'params' members
-        return name == other.name && params == other.params;
-    }
 
-    bool operator<(const Mmpose_params& other) const
-    {
+    bool operator==(const Mmpose_params& other) const noexcept = default;
+
+    bool operator<(const Mmpose_params& other) {
         // Implement less-than comparison
         // For example, compare just the 'name' and 'params' members
         return std::tie(name, params) < std::tie(other.name, other.params);
@@ -298,7 +293,6 @@ struct DataModel : public QObject
     Q_PROPERTY(Filters filters MEMBER filters)
     Q_PROPERTY(OscOutput osc_output MEMBER osc_output)
     Q_PROPERTY(Config config MEMBER config)
-
 
 public:
     Mmpose_params mmpose_params; // Instance of Mmpose_params
