@@ -91,7 +91,6 @@ public:
     int height = 0;
 
     bool operator==(const Size& other) const noexcept = default;
-    bool operator!=(const Size& other) const noexcept = default;
 
 };
 
@@ -120,7 +119,6 @@ public:
     int output_stride = 0;
 
     bool operator==(const Posenet_params& other) const noexcept = default;
-    bool operator!=(const Posenet_params& other) const noexcept = default;
 };
 
 struct Trt_params {
@@ -147,7 +145,6 @@ public:
     float min_pose_confidence = 0.0f;
 
     bool operator==(const Trt_params& other) const noexcept = default;
-    bool operator!=(const Trt_params& other) const noexcept = default;
 };
 
 
@@ -162,7 +159,6 @@ public:
     QVariant params; //either of the three types
 
     bool operator==(const Pose_backend& other) const noexcept = default;
-    bool operator!=(const Pose_backend& other) const noexcept = default;
 };
 
 //camera parameters
@@ -180,7 +176,6 @@ public:
     int rotate = 0;
 
     bool operator==(const Camera_params& other) const noexcept = default;
-    bool operator!=(const Camera_params& other) const noexcept = default;
 };
 
 struct Cameras {
@@ -197,7 +192,6 @@ public:
     QMap<QString, QString> intrinsics; //idk what the structure is here
 
     bool operator==(const Cameras& other) const noexcept = default;
-    bool operator!=(const Cameras& other) const noexcept = default;
 };
 
 //dimmaps 
@@ -209,7 +203,6 @@ public:
     QMap<QString, QVector<QVector<float>>> pairs_per_camera;
 
     bool operator==(const Pose2DToFloor& other) const noexcept = default;
-    bool operator!=(const Pose2DToFloor& other) const noexcept = default;
 };
 
 struct Dimmaps {
@@ -220,7 +213,6 @@ public:
     Pose2DToFloor pose2d_to_floor;
 
     bool operator==(const Dimmaps& other) const noexcept = default; 
-    bool operator!=(const Dimmaps& other) const noexcept = default;
 };
 
 //skeleton obj
@@ -236,7 +228,6 @@ public:
     float min_pose_completeness = 0.0f;
 
     bool operator==(const SkeletonFilters& other) const noexcept = default;
-    bool operator!=(const SkeletonFilters& other) const noexcept = default;
 };
 
 struct Filters {
@@ -247,7 +238,6 @@ public:
     SkeletonFilters skeletons;
 
     bool operator==(const Filters& other) const noexcept = default;
-    bool operator!=(const Filters& other) const noexcept = default;
 };
 
 //osc output obj
@@ -259,7 +249,6 @@ public:
     QMap<QString, int> destinations;
 
     bool operator==(const OscOutput& other) const noexcept = default;
-    bool operator!=(const OscOutput& other) const noexcept = default;
 };
 
 //represents the entire config file obj
@@ -277,7 +266,6 @@ public:
     OscOutput outputs;
 
     bool operator==(const Config& other) const noexcept = default;
-    bool operator!=(const Config& other) const noexcept = default;
 };
 
 struct DataModel : public QObject
