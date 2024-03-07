@@ -91,7 +91,19 @@ Window {
                 text: x.mmpose_params.enable_detection
                 Layout.minimumWidth: 120
             }
+                        TextField {
+                id: resolutionWidth
+                placeholderText: "Resolution Width"
+                text: x.camera_params.resolution.width
+                Layout.minimumWidth: 120
+            }
 
+            TextField {
+                id: resolutionHeight
+                placeholderText: "Resolution Height"
+                text: x.camera_params.resolution.height
+                Layout.minimumWidth: 120
+            }
         }
         }
         

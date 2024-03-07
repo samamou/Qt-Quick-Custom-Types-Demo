@@ -2,6 +2,8 @@
 
 #include <QtQml>
 #include <compare>
+#include <QVector2D> 
+
 
 struct Mmpose_params{
     Q_GADGET
@@ -81,18 +83,18 @@ public:
     }
 };
 
-struct Size {
-    Q_GADGET
-    Q_PROPERTY(int width MEMBER width)
-    Q_PROPERTY(int height MEMBER height)
+// struct Size {
+//     Q_GADGET
+//     Q_PROPERTY(int width MEMBER width)
+//     Q_PROPERTY(int height MEMBER height)
 
-public:
-    int width = 0;
-    int height = 0;
+// public:
+//     int width = 0;
+//     int height = 0;
 
-    bool operator==(const Size& other) const noexcept = default;
+//     bool operator==(const QSize& other) const noexcept = default;
 
-};
+// };
 
 //params object 
 struct Posenet_params {
@@ -101,7 +103,7 @@ struct Posenet_params {
     Q_PROPERTY(int device_id MEMBER device_id)
     Q_PROPERTY(bool draw_bounding_boxes MEMBER draw_bounding_boxes)
     Q_PROPERTY(bool draw_skeleton_edges MEMBER draw_skeleton_edges)
-    Q_PROPERTY(QVector<Size> input_resolution MEMBER input_resolution)
+    Q_PROPERTY(QVector<QSize> input_resolution MEMBER input_resolution)
     Q_PROPERTY(float min_keypoint_confidence MEMBER min_keypoint_confidence)
     Q_PROPERTY(float min_pose_confidence MEMBER min_pose_confidence)
     Q_PROPERTY(bool multi_pose_detection MEMBER multi_pose_detection)
@@ -112,7 +114,7 @@ public:
     int device_id =0;
     bool draw_bounding_boxes = false;
     bool draw_skeleton_edges = false;
-    QVector<Size> input_resolution = {{0, 0}};
+    QVector<QSize> input_resolution = {{0, 0}};
     float min_keypoint_confidence = 0.0f;
     float min_pose_confidence = 0.0f;
     bool multi_pose_detection = false;
@@ -164,13 +166,13 @@ public:
 //camera parameters
 struct Camera_params {
     Q_GADGET
-    Q_PROPERTY(Size resolution MEMBER resolution)
+    Q_PROPERTY(QSize resolution MEMBER resolution)
     Q_PROPERTY(int framerate MEMBER framerate)
     Q_PROPERTY(bool flip MEMBER flip)
     Q_PROPERTY(int rotate MEMBER rotate)
 
 public:
-    Size resolution = {0, 0};
+    QSize resolution = {300, 400};
     int framerate = 0;
     bool flip = false;
     int rotate = 0;
@@ -194,14 +196,26 @@ public:
     bool operator==(const Cameras& other) const noexcept = default;
 };
 
+//Pair of points
+struct PointPair {
+    Q_GADGET
+    Q_PROPERTY(QVector2D point1 MEMBER point1)
+    Q_PROPERTY(QVector2D point2 MEMBER point2)
+
+public:
+    QVector2D point1;
+    QVector2D point2;
+
+    bool operator==(const PointPair& other) const noexcept = default;
+};
+
 //dimmaps 
 struct Pose2DToFloor {
     Q_GADGET
-    Q_PROPERTY(QMap<QString, QVector<QVector<float>>> pairs_per_camera MEMBER pairs_per_camera)
+    Q_PROPERTY(QMap<QString, QVector<PointPair>> pairs_per_camera MEMBER pairs_per_camera)
 
 public:
-    QMap<QString, QVector<QVector<float>>> pairs_per_camera;
-
+    QMap<QString, QVector<PointPair>> pairs_per_camera;
     bool operator==(const Pose2DToFloor& other) const noexcept = default;
 };
 
