@@ -4,13 +4,12 @@
 #include <compare>
 #include <QVector2D> 
 
+struct Void_backend { 
+
+} ;
 
 struct Mmpose_params{
     Q_GADGET
-
-    Q_PROPERTY(QString name MEMBER name) // Declares a QString property named "foo" with a member variable "foo"
-    Q_PROPERTY(int params MEMBER params) // Declares an int property named "bar" with a member variable "bar"
-
     Q_PROPERTY(QString cam_id MEMBER cam_id)
     Q_PROPERTY(int enable_detection MEMBER enable_detection)
     Q_PROPERTY(QString det_config MEMBER det_config)
@@ -73,37 +72,16 @@ public:
     int display_delay = 0;
     bool synchronous_mode = false;
 
-
     bool operator==(const Mmpose_params& other) const noexcept = default;
-
-    bool operator<(const Mmpose_params& other) {
-        // Implement less-than comparison
-        // For example, compare just the 'name' and 'params' members
-        return std::tie(name, params) < std::tie(other.name, other.params);
-    }
 };
 
-// struct Size {
-//     Q_GADGET
-//     Q_PROPERTY(int width MEMBER width)
-//     Q_PROPERTY(int height MEMBER height)
-
-// public:
-//     int width = 0;
-//     int height = 0;
-
-//     bool operator==(const QSize& other) const noexcept = default;
-
-// };
-
-//params object 
 struct Posenet_params {
     Q_GADGET
     Q_PROPERTY(QString base_model MEMBER base_model)
     Q_PROPERTY(int device_id MEMBER device_id)
     Q_PROPERTY(bool draw_bounding_boxes MEMBER draw_bounding_boxes)
     Q_PROPERTY(bool draw_skeleton_edges MEMBER draw_skeleton_edges)
-    Q_PROPERTY(QVector<QSize> input_resolution MEMBER input_resolution)
+    Q_PROPERTY(QSize input_resolution MEMBER input_resolution)
     Q_PROPERTY(float min_keypoint_confidence MEMBER min_keypoint_confidence)
     Q_PROPERTY(float min_pose_confidence MEMBER min_pose_confidence)
     Q_PROPERTY(bool multi_pose_detection MEMBER multi_pose_detection)
@@ -114,7 +92,7 @@ public:
     int device_id =0;
     bool draw_bounding_boxes = false;
     bool draw_skeleton_edges = false;
-    QVector<QSize> input_resolution = {{0, 0}};
+    QSize input_resolution = {0, 0};
     float min_keypoint_confidence = 0.0f;
     float min_pose_confidence = 0.0f;
     bool multi_pose_detection = false;
@@ -149,6 +127,27 @@ public:
     bool operator==(const Trt_params& other) const noexcept = default;
 };
 
+struct Mediapipe_params {
+    Q_GADGET
+    Q_PROPERTY(bool detect_faces MEMBER detect_faces)
+    Q_PROPERTY(bool detect_face_meshs MEMBER detect_face_meshs)
+    Q_PROPERTY(bool detect_hands MEMBER detect_hands)
+    Q_PROPERTY(bool detect_poses MEMBER detect_poses)
+    Q_PROPERTY(bool detect_holistic MEMBER detect_holistic)
+    Q_PROPERTY(bool use_gpu MEMBER use_gpu)
+    Q_PROPERTY(float min_detection_confidence MEMBER min_detection_confidence)
+
+public:
+    bool detect_faces = false;
+    bool detect_face_meshs = false;
+    bool detect_hands = false;
+    bool detect_poses = false;
+    bool detect_holistic = false;
+    bool use_gpu = false;
+    float min_detection_confidence = 0.0f;
+
+    bool operator==(const Mediapipe_params& other) const noexcept = default;
+};
 
 //pose_backends array of type variant
 struct Pose_backend {
@@ -170,28 +169,38 @@ struct Camera_params {
     Q_PROPERTY(int framerate MEMBER framerate)
     Q_PROPERTY(bool flip MEMBER flip)
     Q_PROPERTY(int rotate MEMBER rotate)
+    Q_PROPERTY(bool align_frames MEMBER align_frames)
+    Q_PROPERTY(int id MEMBER id)
+    Q_PROPERTY(QString api MEMBER api)
 
 public:
-    QSize resolution = {300, 400};
+    QSize resolution = {640, 480};
     int framerate = 0;
     bool flip = false;
     int rotate = 0;
+    bool align_frames = false;
+    int id = 0;
+    QString api;
 
     bool operator==(const Camera_params& other) const noexcept = default;
 };
 
 struct Cameras {
-    Q_GADGET
-    Q_PROPERTY(QVector<QString> input_paths MEMBER input_paths)
-    Q_PROPERTY(bool flip_camera MEMBER flip_camera)
-    Q_PROPERTY(QMap<QString, Camera_params> params MEMBER params)
-    Q_PROPERTY(QMap<QString, QString> intrinsics MEMBER intrinsics)
+        Q_GADGET
+        Q_PROPERTY(QVector<QString> input_paths MEMBER input_paths)
+        Q_PROPERTY(bool flip_camera MEMBER flip_camera)
+        Q_PROPERTY(QMap<QString, Camera_params> params MEMBER params)
+        Q_PROPERTY(QMap<QString, QVector<QVector<float>>> intrinsics MEMBER intrinsics)
+        Q_PROPERTY(QMap<QString, QVector<float>> distortion_coeffs MEMBER distortion_coeffs)
+        Q_PROPERTY(QMap<QString, QVector<QVector<float>>> extrinsics MEMBER extrinsics)
 
-public:
-    QVector<QString> input_paths;
-    bool flip_camera = false;
-    QMap<QString, Camera_params> params;
-    QMap<QString, QString> intrinsics; //idk what the structure is here
+    public:
+        QVector<QString> input_paths;
+        bool flip_camera = false;
+        QMap<QString, Camera_params> params;
+        QMap<QString, QVector<QVector<float>>> intrinsics; 
+        QMap<QString, QVector<float>> distortion_coeffs;
+        QMap<QString, QVector<QVector<float>>> extrinsics; 
 
     bool operator==(const Cameras& other) const noexcept = default;
 };

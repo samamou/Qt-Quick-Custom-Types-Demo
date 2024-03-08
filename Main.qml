@@ -72,13 +72,6 @@ Window {
             }
 
             TextField {
-                id: updatedData
-                placeholderText: "name"
-                text: x.mmpose_params.name
-                Layout.minimumWidth: 120
-            }
-
-            TextField {
                 id: updatedCamId
                 placeholderText: "Updated cam_id"
                 text: x.mmpose_params.cam_id
