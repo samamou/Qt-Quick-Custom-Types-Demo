@@ -380,20 +380,111 @@ public:
     bool operator==(const OscOutput &other) const noexcept = default;
 };
 
+struct Ssl
+{
+    Q_GADGET
+    Q_PROPERTY(QString cert_path MEMBER cert_path)
+    Q_PROPERTY(QString key_path MEMBER key_path)
+
+public:
+    QString cert_path;
+    QString key_path;
+
+    bool operator==(const Ssl &other) const noexcept = default;
+};
+
+struct WebSocketOutput
+{
+    Q_GADGET
+    Q_PROPERTY(QString host MEMBER host)
+    Q_PROPERTY(int port MEMBER port)
+    Q_PROPERTY(Ssl ssl MEMBER ssl)
+    Q_PROPERTY(int nb_messages_per_second MEMBER nb_messages_per_second)
+
+public:
+    QString host;
+    int port;
+    Ssl ssl;
+    int nb_messages_per_second;
+
+    bool operator==(const WebSocketOutput &other) const noexcept = default;
+};
+
+struct JsonOutput
+{
+    Q_GADGET
+    Q_PROPERTY(QString path MEMBER path)
+    Q_PROPERTY(QString header MEMBER header)
+    Q_PROPERTY(QString footer MEMBER footer)
+
+public:
+    QString path;
+    QString header;
+    QString footer;
+
+    bool operator==(const JsonOutput &other) const noexcept = default;
+};
+
+struct LibmapperOutput
+{
+    Q_GADGET
+
+public:
+    bool operator==(const LibmapperOutput &other) const noexcept = default;
+};
+
+struct RosbagOutput
+{
+    Q_GADGET
+    Q_PROPERTY(QString channels MEMBER channels)
+    Q_PROPERTY(bool compress MEMBER compress)
+    Q_PROPERTY(QString path MEMBER path)
+    Q_PROPERTY(int rosbag_version MEMBER rosbag_version)
+    Q_PROPERTY(int chunk_duration MEMBER chunk_duration)
+
+public:
+    QString channels;
+    bool compress;
+    QString path;
+    int rosbag_version;
+    int chunk_duration;
+
+    bool operator==(const RosbagOutput &other) const noexcept = default;
+};
+
+struct Outputs
+{
+    Q_GADGET
+    Q_PROPERTY(OscOutput osc MEMBER osc)
+    Q_PROPERTY(WebSocketOutput websocket MEMBER websocket)
+    Q_PROPERTY(JsonOutput json MEMBER json)
+    Q_PROPERTY(RosbagOutput rosbag MEMBER rosbag)
+    Q_PROPERTY(LibmapperOutput libmapper MEMBER libmapper)
+
+public:
+    OscOutput osc;
+    WebSocketOutput websocket;
+    JsonOutput json;
+    RosbagOutput rosbag;
+    LibmapperOutput libmapper;
+
+    bool operator==(const Outputs &other) const noexcept = default;
+};
+
 // represents the entire config file obj
 struct Config
 {
     Q_GADGET
     Q_PROPERTY(QVector<Posenet_params> pose_backends MEMBER pose_backends)
     Q_PROPERTY(QMap<QString, Camera_params> cameras MEMBER cameras)
-    Q_PROPERTY(SkeletonFilters filters MEMBER filters)
-    Q_PROPERTY(OscOutput outputs MEMBER outputs)
+    Q_PROPERTY(Filters filters MEMBER filters)
+    Q_PROPERTY(Outputs outputs MEMBER outputs)
 
 public:
     QVector<Posenet_params> pose_backends;
     QMap<QString, Camera_params> cameras;
-    SkeletonFilters filters;
-    OscOutput outputs;
+    Filters filters;
+    Outputs outputs;
 
     bool operator==(const Config &other) const noexcept = default;
 };
