@@ -2,13 +2,15 @@
 
 #include <QtQml>
 #include <compare>
-#include <QVector2D> 
+#include <QVector2D>
 
-struct Void_backend { 
+struct Void_backend
+{
+    Q_GADGET
+};
 
-} ;
-
-struct Mmpose_params{
+struct Mmpose_params
+{
     Q_GADGET
     Q_PROPERTY(QString cam_id MEMBER cam_id)
     Q_PROPERTY(int enable_detection MEMBER enable_detection)
@@ -41,7 +43,7 @@ struct Mmpose_params{
 
 public:
     QString name = "Hell8o"; // Default value for the "foo" property
-    int params = 123; // Default value for the "bar" property
+    int params = 123;        // Default value for the "bar" property
 
     QString cam_id;
     int enable_detection = 0;
@@ -72,10 +74,11 @@ public:
     int display_delay = 0;
     bool synchronous_mode = false;
 
-    bool operator==(const Mmpose_params& other) const noexcept = default;
+    bool operator==(const Mmpose_params &other) const noexcept = default;
 };
 
-struct Posenet_params {
+struct Posenet_params
+{
     Q_GADGET
     Q_PROPERTY(QString base_model MEMBER base_model)
     Q_PROPERTY(int device_id MEMBER device_id)
@@ -89,7 +92,7 @@ struct Posenet_params {
 
 public:
     QString base_model;
-    int device_id =0;
+    int device_id = 0;
     bool draw_bounding_boxes = false;
     bool draw_skeleton_edges = false;
     QSize input_resolution = {0, 0};
@@ -98,10 +101,11 @@ public:
     bool multi_pose_detection = false;
     int output_stride = 0;
 
-    bool operator==(const Posenet_params& other) const noexcept = default;
+    bool operator==(const Posenet_params &other) const noexcept = default;
 };
 
-struct Trt_params {
+struct Trt_params
+{
     Q_GADGET
     Q_PROPERTY(bool optimize MEMBER optimize)
     Q_PROPERTY(QString keypoint_dataset MEMBER keypoint_dataset)
@@ -124,10 +128,11 @@ public:
     int model_width = 0;
     float min_pose_confidence = 0.0f;
 
-    bool operator==(const Trt_params& other) const noexcept = default;
+    bool operator==(const Trt_params &other) const noexcept = default;
 };
 
-struct Mediapipe_params {
+struct Mediapipe_params
+{
     Q_GADGET
     Q_PROPERTY(bool detect_faces MEMBER detect_faces)
     Q_PROPERTY(bool detect_face_meshs MEMBER detect_face_meshs)
@@ -146,24 +151,26 @@ public:
     bool use_gpu = false;
     float min_detection_confidence = 0.0f;
 
-    bool operator==(const Mediapipe_params& other) const noexcept = default;
+    bool operator==(const Mediapipe_params &other) const noexcept = default;
 };
 
-//pose_backends array of type variant
-struct Pose_backend {
+// pose_backends array of type variant
+struct Pose_backend
+{
     Q_GADGET
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QVariant params MEMBER params)
 
 public:
     QString name;
-    QVariant params; //either of the three types
+    QVariant params; // either of the three types
 
-    bool operator==(const Pose_backend& other) const noexcept = default;
+    bool operator==(const Pose_backend &other) const noexcept = default;
 };
 
-//camera parameters
-struct Camera_params {
+// camera parameters
+struct Camera_params
+{
     Q_GADGET
     Q_PROPERTY(QSize resolution MEMBER resolution)
     Q_PROPERTY(int framerate MEMBER framerate)
@@ -182,31 +189,33 @@ public:
     int id = 0;
     QString api;
 
-    bool operator==(const Camera_params& other) const noexcept = default;
+    bool operator==(const Camera_params &other) const noexcept = default;
 };
 
-struct Cameras {
-        Q_GADGET
-        Q_PROPERTY(QVector<QString> input_paths MEMBER input_paths)
-        Q_PROPERTY(bool flip_camera MEMBER flip_camera)
-        Q_PROPERTY(QMap<QString, Camera_params> params MEMBER params)
-        Q_PROPERTY(QMap<QString, QVector<QVector<float>>> intrinsics MEMBER intrinsics)
-        Q_PROPERTY(QMap<QString, QVector<float>> distortion_coeffs MEMBER distortion_coeffs)
-        Q_PROPERTY(QMap<QString, QVector<QVector<float>>> extrinsics MEMBER extrinsics)
+struct Cameras
+{
+    Q_GADGET
+    Q_PROPERTY(QVector<QString> input_paths MEMBER input_paths)
+    Q_PROPERTY(bool flip_camera MEMBER flip_camera)
+    Q_PROPERTY(QMap<QString, Camera_params> params MEMBER params)
+    Q_PROPERTY(QMap<QString, QVector<QVector<float>>> intrinsics MEMBER intrinsics)
+    Q_PROPERTY(QMap<QString, QVector<float>> distortion_coeffs MEMBER distortion_coeffs)
+    Q_PROPERTY(QMap<QString, QVector<QVector<float>>> extrinsics MEMBER extrinsics)
 
-    public:
-        QVector<QString> input_paths;
-        bool flip_camera = false;
-        QMap<QString, Camera_params> params;
-        QMap<QString, QVector<QVector<float>>> intrinsics; 
-        QMap<QString, QVector<float>> distortion_coeffs;
-        QMap<QString, QVector<QVector<float>>> extrinsics; 
+public:
+    QVector<QString> input_paths;
+    bool flip_camera = false;
+    QMap<QString, Camera_params> params;
+    QMap<QString, QVector<QVector<float>>> intrinsics;
+    QMap<QString, QVector<float>> distortion_coeffs;
+    QMap<QString, QVector<QVector<float>>> extrinsics;
 
-    bool operator==(const Cameras& other) const noexcept = default;
+    bool operator==(const Cameras &other) const noexcept = default;
 };
 
-//Pair of points
-struct PointPair {
+// Pair of points
+struct PointPair
+{
     Q_GADGET
     Q_PROPERTY(QVector2D point1 MEMBER point1)
     Q_PROPERTY(QVector2D point2 MEMBER point2)
@@ -215,31 +224,34 @@ public:
     QVector2D point1;
     QVector2D point2;
 
-    bool operator==(const PointPair& other) const noexcept = default;
+    bool operator==(const PointPair &other) const noexcept = default;
 };
 
-//dimmaps 
-struct Pose2DToFloor {
+// dimmaps
+struct Pose2DToFloor
+{
     Q_GADGET
     Q_PROPERTY(QMap<QString, QVector<PointPair>> pairs_per_camera MEMBER pairs_per_camera)
 
 public:
     QMap<QString, QVector<PointPair>> pairs_per_camera;
-    bool operator==(const Pose2DToFloor& other) const noexcept = default;
+    bool operator==(const Pose2DToFloor &other) const noexcept = default;
 };
 
-struct Dimmaps {
+struct Dimmaps
+{
     Q_GADGET
     Q_PROPERTY(Pose2DToFloor pose2d_to_floor MEMBER pose2d_to_floor)
 
 public:
     Pose2DToFloor pose2d_to_floor;
 
-    bool operator==(const Dimmaps& other) const noexcept = default; 
+    bool operator==(const Dimmaps &other) const noexcept = default;
 };
 
-//skeleton obj
-struct SkeletonFilters {
+// skeleton obj
+struct SkeletonFilters
+{
     Q_GADGET
     Q_PROPERTY(bool two_dimensional MEMBER two_dimensional)
     Q_PROPERTY(bool three_dimensional MEMBER three_dimensional)
@@ -250,32 +262,55 @@ public:
     bool three_dimensional = false;
     float min_pose_completeness = 0.0f;
 
-    bool operator==(const SkeletonFilters& other) const noexcept = default;
+    bool operator==(const SkeletonFilters &other) const noexcept = default;
 };
 
-struct Filters {
+struct HubsFilter // hubs will shutdown? no longer necessary?
+{
+    Q_GADGET
+};
+
+struct Position2DFilter
+{
+    Q_GADGET
+    Q_PROPERTY(QMap<QString, QVector<PointPair>> pairs_per_camera MEMBER pairs_per_camera)
+
+public:
+    QMap<QString, QVector<PointPair>> pairs_per_camera;
+
+    bool operator==(const Position2DFilter &other) const noexcept = default;
+};
+
+struct Filters
+{
     Q_GADGET
     Q_PROPERTY(SkeletonFilters skeletons MEMBER skeletons)
+    Q_PROPERTY(HubsFilter hubs MEMBER hubs)
+    Q_PROPERTY(Position2DFilter position2d MEMBER position2d)
 
 public:
     SkeletonFilters skeletons;
+    HubsFilter hubs;
+    Position2DFilter position2d;
 
-    bool operator==(const Filters& other) const noexcept = default;
+    bool operator==(const Filters &other) const noexcept = default;
 };
 
-//osc output obj
-struct OscOutput {
+// osc output obj
+struct OscOutput
+{
     Q_GADGET
     Q_PROPERTY(QMap<QString, int> destinations MEMBER destinations)
 
 public:
     QMap<QString, int> destinations;
 
-    bool operator==(const OscOutput& other) const noexcept = default;
+    bool operator==(const OscOutput &other) const noexcept = default;
 };
 
-//represents the entire config file obj
-struct Config {
+// represents the entire config file obj
+struct Config
+{
     Q_GADGET
     Q_PROPERTY(QVector<Posenet_params> pose_backends MEMBER pose_backends)
     Q_PROPERTY(QMap<QString, Camera_params> cameras MEMBER cameras)
@@ -288,25 +323,24 @@ public:
     SkeletonFilters filters;
     OscOutput outputs;
 
-    bool operator==(const Config& other) const noexcept = default;
+    bool operator==(const Config &other) const noexcept = default;
 };
 
 struct DataModel : public QObject
 {
-    Q_OBJECT // Macro to enable Qt's meta-object system for this class
+    Q_OBJECT                                                     // Macro to enable Qt's meta-object system for this class
     Q_PROPERTY(Mmpose_params mmpose_params MEMBER mmpose_params) // Declares a property named "mmpose_params" with a member variable "data"
-    Q_PROPERTY(Posenet_params posenet_params MEMBER posenet_params)
-    Q_PROPERTY(Trt_params trt_params MEMBER trt_params)
-    Q_PROPERTY(Pose_backend pose_backend MEMBER pose_backend)
-    Q_PROPERTY(Camera_params camera_params MEMBER camera_params)
-    Q_PROPERTY(Cameras cameras MEMBER cameras)
-    Q_PROPERTY(Dimmaps dimmaps MEMBER dimmaps)
-    Q_PROPERTY(Filters filters MEMBER filters)
-    Q_PROPERTY(OscOutput osc_output MEMBER osc_output)
-    Q_PROPERTY(Config config MEMBER config)
+        Q_PROPERTY(Posenet_params posenet_params MEMBER posenet_params)
+            Q_PROPERTY(Trt_params trt_params MEMBER trt_params)
+                Q_PROPERTY(Pose_backend pose_backend MEMBER pose_backend)
+                    Q_PROPERTY(Camera_params camera_params MEMBER camera_params)
+                        Q_PROPERTY(Cameras cameras MEMBER cameras)
+                            Q_PROPERTY(Dimmaps dimmaps MEMBER dimmaps)
+                                Q_PROPERTY(Filters filters MEMBER filters)
+                                    Q_PROPERTY(OscOutput osc_output MEMBER osc_output)
+                                        Q_PROPERTY(Config config MEMBER config)
 
-public:
-    Mmpose_params mmpose_params; // Instance of Mmpose_params
+                                            public : Mmpose_params mmpose_params; // Instance of Mmpose_params
     Posenet_params posenet_params;
     Trt_params trt_params;
     Pose_backend pose_backend;
