@@ -7,6 +7,9 @@
 struct Void_backend
 {
     Q_GADGET
+
+public:
+    bool operator==(const Void_backend &other) const noexcept = default;
 };
 
 struct Mmpose_params
@@ -192,6 +195,17 @@ public:
     bool operator==(const Camera_params &other) const noexcept = default;
 };
 
+struct DistortionCoefficients
+{
+    Q_GADGET
+    Q_PROPERTY(QVector<float> coeffs MEMBER coeffs)
+
+public:
+    QVector<float> coeffs; // Stores the distortion coefficients
+
+    bool operator==(const DistortionCoefficients &other) const noexcept = default;
+};
+
 struct Cameras
 {
     Q_GADGET
@@ -199,7 +213,7 @@ struct Cameras
     Q_PROPERTY(bool flip_camera MEMBER flip_camera)
     Q_PROPERTY(QMap<QString, Camera_params> params MEMBER params)
     Q_PROPERTY(QMap<QString, QVector<QVector<float>>> intrinsics MEMBER intrinsics)
-    Q_PROPERTY(QMap<QString, QVector<float>> distortion_coeffs MEMBER distortion_coeffs)
+    Q_PROPERTY(QMap<QString, DistortionCoefficients> distortion_coeffs MEMBER distortion_coeffs)
     Q_PROPERTY(QMap<QString, QVector<QVector<float>>> extrinsics MEMBER extrinsics)
 
 public:
@@ -207,7 +221,7 @@ public:
     bool flip_camera = false;
     QMap<QString, Camera_params> params;
     QMap<QString, QVector<QVector<float>>> intrinsics;
-    QMap<QString, QVector<float>> distortion_coeffs;
+    QMap<QString, DistortionCoefficients> distortion_coeffs;
     QMap<QString, QVector<QVector<float>>> extrinsics;
 
     bool operator==(const Cameras &other) const noexcept = default;
@@ -268,6 +282,9 @@ public:
 struct HubsFilter // hubs will shutdown? no longer necessary?
 {
     Q_GADGET
+
+public:
+    bool operator==(const HubsFilter &other) const noexcept = default;
 };
 
 struct Position2DFilter
@@ -281,17 +298,72 @@ public:
     bool operator==(const Position2DFilter &other) const noexcept = default;
 };
 
+struct CameraCalibration
+{
+    Q_GADGET
+    Q_PROPERTY(QVector<float> Kmats MEMBER Kmats)
+    Q_PROPERTY(QVector<float> Rtmats MEMBER Rtmats)
+
+public:
+    QVector<float> Kmats;
+    QVector<float> Rtmats;
+
+    bool operator==(const CameraCalibration &other) const noexcept = default;
+};
+
+struct PositionFilter
+{
+    Q_GADGET
+    Q_PROPERTY(QMap<QString, CameraCalibration> calibrations MEMBER calibrations)
+    Q_PROPERTY(bool use_pyrealsense2 MEMBER use_pyrealsense2)
+
+public:
+    QMap<QString, CameraCalibration> calibrations;
+    bool use_pyrealsense2 = false;
+
+    bool operator==(const PositionFilter &other) const noexcept = default;
+};
+
+struct ArmUpFilter
+{
+    Q_GADGET
+
+public:
+    bool operator==(const ArmUpFilter &other) const noexcept = default;
+};
+
+struct TriangulateFilter
+{
+    Q_GADGET
+    Q_PROPERTY(QMap<QString, CameraCalibration> calibration MEMBER calibration)
+    Q_PROPERTY(QMap<QString, DistortionCoefficients> dist_coeffs MEMBER dist_coeffs)
+    Q_PROPERTY(QSize res MEMBER res)
+
+public:
+    QMap<QString, CameraCalibration> calibration;
+    QMap<QString, DistortionCoefficients> dist_coeffs;
+    QSize res;
+
+    bool operator==(const TriangulateFilter &other) const noexcept = default;
+};
+
 struct Filters
 {
     Q_GADGET
     Q_PROPERTY(SkeletonFilters skeletons MEMBER skeletons)
     Q_PROPERTY(HubsFilter hubs MEMBER hubs)
     Q_PROPERTY(Position2DFilter position2d MEMBER position2d)
+    Q_PROPERTY(PositionFilter position MEMBER position)
+    Q_PROPERTY(ArmUpFilter armup MEMBER armup)
+    Q_PROPERTY(TriangulateFilter triangulate MEMBER triangulate)
 
 public:
     SkeletonFilters skeletons;
     HubsFilter hubs;
     Position2DFilter position2d;
+    PositionFilter position;
+    ArmUpFilter armup;
+    TriangulateFilter triangulate;
 
     bool operator==(const Filters &other) const noexcept = default;
 };
@@ -328,8 +400,9 @@ public:
 
 struct DataModel : public QObject
 {
-    Q_OBJECT                                                     // Macro to enable Qt's meta-object system for this class
-    Q_PROPERTY(Mmpose_params mmpose_params MEMBER mmpose_params) // Declares a property named "mmpose_params" with a member variable "data"
+    Q_OBJECT // Macro to enable Qt's meta-object system for this class
+    Q_PROPERTY(Void_backend void_backend MEMBER void_backend)
+        Q_PROPERTY(Mmpose_params mmpose_params MEMBER mmpose_params) // Declares a property named "mmpose_params" with a member variable "data"
         Q_PROPERTY(Posenet_params posenet_params MEMBER posenet_params)
             Q_PROPERTY(Trt_params trt_params MEMBER trt_params)
                 Q_PROPERTY(Pose_backend pose_backend MEMBER pose_backend)
@@ -341,6 +414,8 @@ struct DataModel : public QObject
                                         Q_PROPERTY(Config config MEMBER config)
 
                                             public : Mmpose_params mmpose_params; // Instance of Mmpose_params
+
+    Void_backend void_backend;
     Posenet_params posenet_params;
     Trt_params trt_params;
     Pose_backend pose_backend;
