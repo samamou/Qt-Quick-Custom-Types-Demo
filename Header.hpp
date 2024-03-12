@@ -481,13 +481,13 @@ struct Config
   Q_PROPERTY(QList<Pose_backend> pose_backends MEMBER pose_backends)
   Q_PROPERTY(QMap<QString, QVariant> cameras MEMBER cameras)
   Q_PROPERTY(QList<QVariant> filters MEMBER filters)
-  Q_PROPERTY(Outputs outputs MEMBER outputs)
+  Q_PROPERTY(QList<QVariant> outputs MEMBER outputs)
 
 public:
   QList<Pose_backend> pose_backends;
   QMap<QString, QVariant> cameras;
   QList<QVariant> filters;
-  Outputs outputs;
+  QList<QVariant> outputs;
 
   bool operator==(const Config& other) const noexcept = default;
 };

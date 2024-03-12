@@ -19,17 +19,6 @@ Window {
             x.pose_backend.name = "PoseNet";
             x.pose_backend.params = x.posenet_params;
             x.config.pose_backends = [ x.pose_backend ];
-
-            // Set cameras
-            x.cameras.camera1 = "Camera 1";
-            x.cameras.camera2 = "Camera 2";
-            x.config.cameras = x.cameras;
-
-            // Set outputs
-            x.outputs.osc_output = "osc";
-            x.outputs.websocket_output = "WebSocket";
-            x.config.outputs = x.outputs;
-
             console.log(JSON.stringify(x.config, null, 2));
 
         } 
