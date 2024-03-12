@@ -7,7 +7,7 @@ import QtQuick.Controls.Universal
 
 Window {
     width: 640
-    height: 480
+    height: 750
     visible: true
     title: qsTr("LivePose_test")
 
@@ -15,11 +15,26 @@ Window {
         id: x
         Component.onCompleted:
         {
+            // Set pose_backend as backend
+            x.pose_backend.name = "PoseNet";
+            x.pose_backend.params = x.posenet_params;
+            x.config.pose_backends = [ x.pose_backend ];
+
+            // Set cameras
+            x.cameras.camera1 = "Camera 1";
+            x.cameras.camera2 = "Camera 2";
+            x.config.cameras = x.cameras;
+
+            // Set outputs
+            x.outputs.osc_output = "osc";
+            x.outputs.websocket_output = "WebSocket";
+            x.config.outputs = x.outputs;
+
             console.log(JSON.stringify(x.config, null, 2));
+
         } 
     }
-
-
+    
     Rectangle {
         id: sidebar
         width: parent.width * 0.3
@@ -62,6 +77,17 @@ Window {
             Label {
                 text: "parameters"
                 font.bold: true
+            }
+
+            ComboBox {
+                id: backendSelector
+                model: x.config.pose_backends
+                Layout.fillWidth: true
+                currentIndex: 0
+
+                onCurrentIndexChanged: {
+                    model.text("Selected backend: " + model[currentIndex].name);                
+            }
             }
 
             TextField {
