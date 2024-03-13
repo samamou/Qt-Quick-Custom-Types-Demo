@@ -46,9 +46,6 @@ struct Mmpose_params
   Q_PROPERTY(bool synchronous_mode MEMBER synchronous_mode)
 
 public:
-  // QString name;     // Default value for the "foo" property
-  // int params = 123; // Default value for the "bar" property
-
   QString cam_id;
   int enable_detection = 0;
   QString det_config;
@@ -458,18 +455,18 @@ public:
 struct Outputs
 {
   Q_GADGET
-  Q_PROPERTY(OscOutput osc MEMBER osc)
-  Q_PROPERTY(WebSocketOutput websocket MEMBER websocket)
-  Q_PROPERTY(JsonOutput json MEMBER json)
-  Q_PROPERTY(RosbagOutput rosbag MEMBER rosbag)
-  Q_PROPERTY(LibmapperOutput libmapper MEMBER libmapper)
+  Q_PROPERTY(QList<OscOutput> osc MEMBER osc)
+  Q_PROPERTY(QList<WebSocketOutput> websocket MEMBER websocket)
+  Q_PROPERTY(QList<JsonOutput> json MEMBER json)
+  Q_PROPERTY(QList<RosbagOutput> rosbag MEMBER rosbag)
+  Q_PROPERTY(QList<LibmapperOutput> libmapper MEMBER libmapper)
 
 public:
-  OscOutput osc;
-  WebSocketOutput websocket;
-  JsonOutput json;
-  RosbagOutput rosbag;
-  LibmapperOutput libmapper;
+  QList<OscOutput> osc;
+  QList<WebSocketOutput> websocket;
+  QList<JsonOutput> json;
+  QList<RosbagOutput> rosbag;
+  QList<LibmapperOutput> libmapper;
 
   bool operator==(const Outputs& other) const noexcept = default;
 };
@@ -481,13 +478,13 @@ struct Config
   Q_PROPERTY(QList<Pose_backend> pose_backends MEMBER pose_backends)
   Q_PROPERTY(QMap<QString, QVariant> cameras MEMBER cameras)
   Q_PROPERTY(QList<QVariant> filters MEMBER filters)
-  Q_PROPERTY(QList<QVariant> outputs MEMBER outputs)
+  Q_PROPERTY(Outputs outputs MEMBER outputs)
 
 public:
   QList<Pose_backend> pose_backends;
   QMap<QString, QVariant> cameras;
   QList<QVariant> filters;
-  QList<QVariant> outputs;
+  Outputs outputs;
 
   bool operator==(const Config& other) const noexcept = default;
 };
@@ -511,8 +508,6 @@ struct DataModel : public QObject
   Q_PROPERTY(Dimmaps dimmaps MEMBER dimmaps)
 
   //Filters properties
-
-  //fill in SkeletonFilters, HubsFilter, Position2DFilter, PositionFilter, ArmUpFilter, TriangulateFilter,
   Q_PROPERTY(SkeletonFilters skeletons MEMBER skeletons)
   Q_PROPERTY(HubsFilter hubs MEMBER hubs)
   Q_PROPERTY(Position2DFilter position2d MEMBER position2d)
@@ -523,6 +518,12 @@ struct DataModel : public QObject
 
   //Output properties
   Q_PROPERTY(OscOutput osc_output MEMBER osc_output)
+  Q_PROPERTY(WebSocketOutput websocket_output MEMBER websocket_output)
+  Q_PROPERTY(JsonOutput json_output MEMBER json_output)
+  Q_PROPERTY(RosbagOutput rosbag_output MEMBER rosbag_output)
+  Q_PROPERTY(LibmapperOutput libmapper_output MEMBER libmapper_output)
+  Q_PROPERTY(Outputs outputs MEMBER outputs)
+
   Q_PROPERTY(Config config MEMBER config)
 
 public:
@@ -552,5 +553,11 @@ public:
 
   //Output properties
   OscOutput osc_output;
+  WebSocketOutput websocket_output;
+  JsonOutput json_output;
+  RosbagOutput rosbag_output;
+  LibmapperOutput libmapper_output;
+  Outputs outputs;
+
   Config config;
 };
