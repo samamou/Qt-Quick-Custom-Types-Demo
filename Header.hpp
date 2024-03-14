@@ -370,10 +370,10 @@ public:
 struct OscOutput
 {
   Q_GADGET
-  Q_PROPERTY(QMap<QString, int> destinations MEMBER destinations)
+  Q_PROPERTY(QVariantMap destinations MEMBER destinations)
 
 public:
-  QMap<QString, int> destinations;
+  QVariantMap destinations;
 
   bool operator==(const OscOutput& other) const noexcept = default;
 };
@@ -454,14 +454,14 @@ public:
 struct Outputs
 {
   Q_GADGET
-  Q_PROPERTY(QList<OscOutput> osc MEMBER osc)
+  Q_PROPERTY(OscOutput osc MEMBER osc)
   Q_PROPERTY(QList<WebSocketOutput> websocket MEMBER websocket)
   Q_PROPERTY(QList<JsonOutput> json MEMBER json)
   Q_PROPERTY(QList<RosbagOutput> rosbag MEMBER rosbag)
   Q_PROPERTY(QList<LibmapperOutput> libmapper MEMBER libmapper)
 
 public:
-  QList<OscOutput> osc;
+  OscOutput osc;
   QList<WebSocketOutput> websocket;
   QList<JsonOutput> json;
   QList<RosbagOutput> rosbag;
@@ -477,13 +477,13 @@ struct Config
   Q_PROPERTY(QList<Pose_backend> pose_backends MEMBER pose_backends)
   Q_PROPERTY(Cameras cameras MEMBER cameras)
   Q_PROPERTY(QVariantMap filters MEMBER filters)
-  Q_PROPERTY(Outputs outputs MEMBER outputs)
+  Q_PROPERTY(QVariantMap outputs MEMBER outputs)
 
 public:
   QList<Pose_backend> pose_backends;
   Cameras cameras;
   QVariantMap filters;
-  Outputs outputs;
+  QVariantMap outputs;
 
   bool operator==(const Config& other) const noexcept = default;
 };
