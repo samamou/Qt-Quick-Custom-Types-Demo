@@ -182,7 +182,7 @@ struct Camera_params
   Q_PROPERTY(QString api MEMBER api)
 
 public:
-  QSize resolution = {640, 480};
+  QSize resolution = {0, 0};
   int framerate = 0;
   bool flip = false;
   int rotate = 0;
@@ -340,7 +340,7 @@ struct TriangulateFilter
 public:
   QMap<QString, CameraCalibration> calibration;
   QMap<QString, DistortionCoefficients> dist_coeffs;
-  QSize res;
+  QSize res = {0, 0};
 
   bool operator==(const TriangulateFilter& other) const noexcept = default;
 };
@@ -476,13 +476,13 @@ struct Config
   Q_GADGET
   Q_PROPERTY(QList<Pose_backend> pose_backends MEMBER pose_backends)
   Q_PROPERTY(Cameras cameras MEMBER cameras)
-  Q_PROPERTY(QList<QVariant> filters MEMBER filters)
+  Q_PROPERTY(QVariantMap filters MEMBER filters)
   Q_PROPERTY(Outputs outputs MEMBER outputs)
 
 public:
   QList<Pose_backend> pose_backends;
   Cameras cameras;
-  QList<QVariant> filters;
+  QVariantMap filters;
   Outputs outputs;
 
   bool operator==(const Config& other) const noexcept = default;

@@ -21,7 +21,7 @@ Window {
             x.posenet_params.device_id = 0;
             x.posenet_params.draw_bounding_boxes = false;
             x.posenet_params.draw_skeleton_edges = true;
-            x.posenet_params.input_resolution = [250, 250];
+            x.posenet_params.input_resolution = Qt.size(250, 250);
             x.posenet_params.min_keypoint_confidence = 0.1;
             x.posenet_params.min_pose_confidence = 0.15;
             x.posenet_params.multi_pose_detection = true;
@@ -30,7 +30,7 @@ Window {
             x.config.pose_backends = [ x.pose_backend ];
 
             // Set up cameras
-            x.camera_params.resolution = [640, 480];
+            x.camera_params.resolution = Qt.size(640, 480);
             x.camera_params.framerate = 30;
             x.camera_params.flip = false;
             x.camera_params.rotate = 0;
@@ -40,6 +40,12 @@ Window {
             // Set up dimmaps
         
             // Set up filters
+            x.skeletons.two_dimensional = true;
+            x.skeletons.three_dimensional = false;
+            x.skeletons.min_pose_completeness = 0.5;
+            x.filters.skeletons = x.skeletons;
+            x.config.filters = { "skeletons": x.skeletons };
+
         
             // Set up outputs
             x.osc_output.destinations["localhost"] = 9000;
