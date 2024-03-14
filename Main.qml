@@ -34,9 +34,8 @@ Window {
             x.camera_params.framerate = 30;
             x.camera_params.flip = false;
             x.camera_params.rotate = 0;
-            x.cameras.input_paths = ["/dev/video0"];
-            x.cameras.params["/dev/video0"] = x.camera_params;
-            x.config.cameras = [ x.cameras ];
+            x.config.cameras.input_paths = ["/dev/video0"];
+            x.config.cameras.params = { "/dev/video0" :  x.camera_params };
 
             // Set up dimmaps
         

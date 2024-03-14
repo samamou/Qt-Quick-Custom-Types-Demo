@@ -209,19 +209,18 @@ struct Cameras
   Q_GADGET
   Q_PROPERTY(QVector<QString> input_paths MEMBER input_paths)
   Q_PROPERTY(bool flip_camera MEMBER flip_camera)
-  Q_PROPERTY(QMap<QString, Camera_params> params MEMBER params)
-  Q_PROPERTY(QMap<QString, QVector<QVector<float>>> intrinsics MEMBER intrinsics)
-  Q_PROPERTY(
-      QMap<QString, DistortionCoefficients> distortion_coeffs MEMBER distortion_coeffs)
-  Q_PROPERTY(QMap<QString, QVector<QVector<float>>> extrinsics MEMBER extrinsics)
+  Q_PROPERTY(QVariantMap params MEMBER params)
+  Q_PROPERTY(QVariantMap intrinsics MEMBER intrinsics)
+  Q_PROPERTY(QVariantMap distortion_coeffs MEMBER distortion_coeffs)
+  Q_PROPERTY(QVariantMap extrinsics MEMBER extrinsics)
 
 public:
   QVector<QString> input_paths;
   bool flip_camera = false;
-  QMap<QString, Camera_params> params;
-  QMap<QString, QVector<QVector<float>>> intrinsics;
-  QMap<QString, DistortionCoefficients> distortion_coeffs;
-  QMap<QString, QVector<QVector<float>>> extrinsics;
+  QVariantMap params;
+  QVariantMap intrinsics;
+  QVariantMap distortion_coeffs;
+  QVariantMap extrinsics;
 
   bool operator==(const Cameras& other) const noexcept = default;
 };
@@ -476,13 +475,13 @@ struct Config
 {
   Q_GADGET
   Q_PROPERTY(QList<Pose_backend> pose_backends MEMBER pose_backends)
-  Q_PROPERTY(QMap<QString, QVariant> cameras MEMBER cameras)
+  Q_PROPERTY(Cameras cameras MEMBER cameras)
   Q_PROPERTY(QList<QVariant> filters MEMBER filters)
   Q_PROPERTY(Outputs outputs MEMBER outputs)
 
 public:
   QList<Pose_backend> pose_backends;
-  QMap<QString, QVariant> cameras;
+  Cameras cameras;
   QList<QVariant> filters;
   Outputs outputs;
 
